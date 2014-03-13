@@ -1,4 +1,4 @@
-SELECT distinct(obj_id), tag, field, camera_id, rplanet_mcmc, rplanet_mcmc_err
+SELECT distinct(obj_id), tag, field, camera_id, rplanet_mcmc, rplanet_mcmc_err, period
 FROM hunterdet 
 JOIN hunterdet_flags using(obj_id) 
 JOIN nomad using(obj_id) 
