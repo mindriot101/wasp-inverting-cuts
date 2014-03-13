@@ -9,12 +9,15 @@ from uncertainties import ufloat
 
 class ObjectStats(object):
     def __init__(self, data):
-        for key in data:
-            setattr(self, key, data[key])
+        self.data = data
+
+    def __getattr__(self, key):
+        return self.data.get(key, None)
 
     def print_summary(self):
         print "Object {}".format(self.obj_id)
         print "\tRadius {}".format(ufloat(self.rplanet_mcmc, self.rplanet_mcmc_err))
+        print "\tOrbital period {}".format(self.period)
 
 
 class HunterPage(object):
