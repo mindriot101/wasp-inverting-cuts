@@ -2,7 +2,7 @@
 -- the parameters you're interested in.
 
 -- BOILERPLATE, leave this alone!
-SELECT distinct(obj_id), tag, field, camera_id, rplanet_mcmc, rplanet_mcmc_err, period
+SELECT distinct(obj_id), tag, field, camera_id, rplanet_mcmc, rplanet_mcmc_err, period, vmag
 FROM hunterdet 
 JOIN hunterdet_flags using(obj_id) 
 JOIN nomad using(obj_id) 

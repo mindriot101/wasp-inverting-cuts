@@ -16,8 +16,9 @@ class ObjectStats(object):
 
     def print_summary(self):
         print "Object {}".format(self.obj_id)
-        print "\tRadius {}".format(ufloat(self.rplanet_mcmc, self.rplanet_mcmc_err))
-        print "\tOrbital period {}".format(self.period)
+        print "\tRadius: {}".format(ufloat(self.rplanet_mcmc, self.rplanet_mcmc_err))
+        print "\tOrbital period: {}".format(self.period)
+        print "\tV magnitude: {}".format(self.vmag)
 
 
 class HunterPage(object):
