@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import MySQLdb
+import sys
 from MySQLdb.cursors import SSDictCursor
 import os
 import subprocess as sp
@@ -70,13 +71,28 @@ class Query(object):
         return self.contents
 
     def perform(self):
-        with MySQLdb.connect(db='wasp', user='sw', host='127.0.0.1',
-                cursorclass=SSDictCursor) as cursor:
+        try:
+            with MySQLdb.connect(db='wasp', user='sw', host='127.0.0.1',
+                    cursorclass=SSDictCursor) as cursor:
 
-            cursor.execute(str(self))
+                cursor.execute(str(self))
 
-            for row in cursor:
-                yield row
+                for row in cursor:
+                    yield row
+        except MySQLdb.OperationalError as err:
+            if "Can't connect to MySQL server" in str(err):
+                self.ssh_tunnel_usage()
+                sys.exit(1)
+
+    def ssh_tunnel_usage(self):
+        print '''***
+To ssh tunnel into the WASP database, run the following command in a new terminal:
+
+        ssh -L 3306:localhost:3306 -N <username>@ngtshead.astro.warwick.ac.uk
+
+where <username> is your ngtshead login. This command will hang and you won't get your terminal back, so Ctrl-C to exit.
+***
+        '''
 
 def main():
     query = Query()
